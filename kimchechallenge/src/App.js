@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 import { AiOutlineSearch } from 'react-icons/ai';
 import { GrCurrency } from 'react-icons/gr'
 import {MdSmartphone} from 'react-icons/md'
-// write a GraphQL query that asks for names and codes for all countries
+
+
+// write a GraphQL query for all countries
 
 const paises = gql`
 {
@@ -67,7 +69,7 @@ const App = () => {
 
     <div className="container">
       <h1>Country Search</h1>
-      <p>Some random text </p>
+      <p>Write a random country </p>
       <div className="containerInput">
         <AiOutlineSearch />
         <input
