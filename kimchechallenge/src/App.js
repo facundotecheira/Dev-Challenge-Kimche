@@ -1,32 +1,12 @@
 import React from "react";
+import Navbar from "./components/Navbar";
 import "./App.css";
-import { gql, useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { AiOutlineSearch } from 'react-icons/ai';
 import { GrCurrency } from 'react-icons/gr'
-import {MdSmartphone} from 'react-icons/md'
-
-
-// write a GraphQL query for all countries
-
-const paises = gql`
-{
-  countries {
-    code
-    capital
-    name
-    phone
-    currency
-    continent{
-      name
-    }
-    languages{
-      name
-    }
-  }
-}
-`
-
+import { MdSmartphone } from 'react-icons/md'
+import paises from "./query/query";
 
 
 
@@ -62,78 +42,83 @@ const App = () => {
   }, [result])
 
 
-  
+
 
   return (
 
+    <>
+      <Navbar />
+      <div className="container">
+        <h1>Country Search</h1>
+        <p>Write a random country </p>
+        <div className="containerInput">
+          <AiOutlineSearch />
+          <input
+            onChange={handelChange}
+          ></input>
+        </div>
+        <div className="containerActions">
+          <h2>Group by</h2>
+          <button className="button continents" onClick={handelOptions}>Continents</button>
+          <button className="button languaje" onClick={handelOptions}>Language</button>
+        </div>
+        {
+          aux.map((x) => {
+            return (
+              <>
+                {continent ? <h3> {x.continent.name} </h3> : (
+                  <>
+                    <h3>Languajes</h3>
+                    <ul>
+                      {
+                        x.languages.map(lan =>
 
-    <div className="container">
-      <h1>Country Search</h1>
-      <p>Write a random country </p>
-      <div className="containerInput">
-        <AiOutlineSearch />
-        <input
-          onChange={handelChange}
-        ></input>
+                          <li>
+                            {lan.name}
+                          </li>
+
+                        )
+
+                      }
+                    </ul>
+                  </>
+                )}
+                <div className="containerCountries">
+              
+
+                  <div className="containerFlag">
+                    <img
+                      className="flag"
+                      src={`https://www.banderas-mundo.es/data/flags/w580/${x.code.toString().toLowerCase()}.webp`}
+                    />
+                    <p>{x.name}</p>
+                  </div>
+                  <p>Capital: {x.capital}</p>
+                  <div className="containerFlag">
+                    <GrCurrency />
+                    <p className="space">
+                      {x.currency}
+                    </p>
+
+                  </div>
+
+                  <div className="containerFlag">
+                    <MdSmartphone />
+                    <p className="space">
+                      +{x.phone}
+                    </p>
+
+                  </div>
+
+                </div>
+              </>
+            )
+          })
+        }
       </div>
-      <div className="containerActions">
-        <h2>Group by</h2>
-        <button className="button continents" onClick={handelOptions}>Continents</button>
-        <button className="button languaje" onClick={handelOptions}>Language</button>
-      </div>
-      {
-        aux.map((x) => {
-          return (
-            <>
-              {continent ? <h3> {x.continent.name} </h3> : (
-                <>
-                  <h3>Languajes</h3>
-                  <ul>
-                    {
-                      x.languages.map(lan =>
 
-                        <li>
-                          {lan.name}
-                        </li>
+    </>
 
-                      )
-
-                    }
-                  </ul>
-                </>
-              )}
-              <div className="containerCountries">
-
-                <div className="containerFlag">
-                  <img
-                    className="flag"
-                    src={`https://www.banderas-mundo.es/data/flags/w580/${x.code.toString().toLowerCase()}.webp`}
-                  />
-                  <p>{x.name}</p>
-                </div>
-                <p>Capital: {x.capital}</p>
-                <div className="containerFlag">
-                  <GrCurrency />
-                  <p className="space">
-                    {x.currency}
-                  </p>
-
-                </div>
-
-                <div className="containerFlag">
-                  <MdSmartphone />
-                  <p className="space">
-                    +{x.phone}
-                  </p>
-
-                </div>
-
-              </div>
-            </>
-          )
-        })
-      }
-    </div>
 
   );
 };

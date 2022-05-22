@@ -1,5 +1,7 @@
 *{
-  background-color: #F9F3EE;
+  margin: 0;
+  padding: 0;
+  background-color: #F9F3EE ;
   /* background-color: #F8ECD1; */
 }
 .container{
@@ -29,9 +31,9 @@
   /* border: 1px solid black; */
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: .2rem;
-  width: 50%;
+  width: 60%;
 }
 
 .button{
